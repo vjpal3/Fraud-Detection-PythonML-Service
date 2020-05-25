@@ -1,6 +1,5 @@
 from flask import Flask, jsonify
-import numpy as np
-import pandas as pd
+import fraud_detection
 
 app = Flask(__name__)
 
@@ -12,7 +11,10 @@ def index():
 def health():
     return jsonify({"status": "UP"}), 200
 
-
+@app.route("/api/fraud-detection/model")
+def get_model():
+    result = fraud_detection.train_model()
+    return jsonify(result), 200
 
 if __name__ == "__main__":
     app.run(host='localhost', port='8090')
